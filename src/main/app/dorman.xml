@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.6.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8081" doc:name="HTTP Listener Configuration"/>
+    <ws:consumer-config name="Temperature_Service_Consumer" wsdlLocation="temperature.wsdl" service="Temperature" port="TemperatureImplPort" serviceAddress="http://localhost:8081/srv/temperature" doc:name="Web Service Consumer"/>
+    <data-mapper:config name="String_To_Xml_getResult_" transformationGraphPath="string_to_xml_getresult_.grf" doc:name="String_To_Xml_getResult_"/>
+    <data-mapper:config name="Xml_getResultResponse__To_JSON" transformationGraphPath="xml_getresultresponse__to_json.grf" doc:name="Xml_getResultResponse__To_JSON"/>
+    <data-mapper:config name="String_To_Xml_getResult__1" transformationGraphPath="string_to_xml_getresult__1.grf" doc:name="String_To_Xml_getResult__1"/>
+    <data-mapper:config name="Xml_getResultResponse__To_Map" transformationGraphPath="xml_getresultresponse__to_map.grf" doc:name="Xml_getResultResponse__To_Map"/>
+    <ws:consumer-config name="Distance_Service_Consumer" wsdlLocation="distance.wsdl" service="Distance" port="DistanceImplPort" serviceAddress="http://localhost:8081/srv/distance" doc:name="Web Service Consumer"/>
+    <data-mapper:config name="String_To_Xml_getResult__1String_To_Xml_getResult__2" transformationGraphPath="string_to_xml_getresult__2.grf" doc:name="String_To_Xml_getResult__1String_To_Xml_getResult__2"/>
+    <data-mapper:config name="Xml_getResultResponse__To_Map_1" transformationGraphPath="xml_getresultresponse__to_map_1.grf" doc:name="Xml_getResultResponse__To_Map_1"/>
+    <data-mapper:config name="Double_To_JSON" transformationGraphPath="double_to_json.grf" doc:name="Double_To_JSON"/>
+    <data-mapper:config name="String_To_Xml_getResult__1String_To_Xml_getResult__2String_To_Xml_getResult__3" transformationGraphPath="string_to_xml_getresult__3.grf" doc:name="String_To_Xml_getResult__1String_To_Xml_getResult__2String_To_Xml_getResult__3"/>
+    <ws:consumer-config name="Web_Service_Consumer" wsdlLocation="lightstatus.wsdl" service="Light" port="LightImplPort" serviceAddress="http://localhost:8081/srv/lightstatus" doc:name="Web Service Consumer"/>
+    <data-mapper:config name="String_To_Xml_getResult__1String_To_Xml_getResult__2String_To_Xml_getResult__3String_To_Xml_getResult__4" transformationGraphPath="string_to_xml_getresult__4.grf" doc:name="String_To_Xml_getResult__1String_To_Xml_getResult__2String_To_Xml_getResult__3String_To_Xml_getResult__4"/>
+    <data-mapper:config name="Xml_getResultResponse__To_Map_1Xml_getResultResponse__To_Map_2" transformationGraphPath="xml_getresultresponse__to_map_2.grf" doc:name="Xml_getResultResponse__To_Map_1Xml_getResultResponse__To_Map_2"/>
+    <ws:consumer-config name="Sound_Status_Service_Consumer1" wsdlLocation="soundstatus.wsdl" service="Sound" port="SoundImplPort" serviceAddress="http://localhost:8081/srv/soundstatus" doc:name="Web Service Consumer"/>
+    <data-mapper:config name="String_To_Xml_getResult__1String_To_Xml_getResult__2String_To_Xml_getResult__3String_To_Xml_getResult__4String_To_Xml_getResult__5" transformationGraphPath="string_to_xml_getresult__5.grf" doc:name="String_To_Xml_getResult__1String_To_Xml_getResult__2String_To_Xml_getResult__3String_To_Xml_getResult__4String_To_Xml_getResult__5"/>
+    <data-mapper:config name="Xml_getResultResponse__To_Map_1Xml_getResultResponse__To_Map_2Xml_getResultResponse__To_Map_3" transformationGraphPath="xml_getresultresponse__to_map_3.grf" doc:name="Xml_getResultResponse__To_Map_1Xml_getResultResponse__To_Map_2Xml_getResultResponse__To_Map_3"/>
+    <flow name="getTemperatureFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/srv/temperature" doc:name="HTTP"/>
+        <cxf:jaxws-service serviceClass="com.wudi.srv.TemperatureImpl" doc:name="CXF"/>
+        <component class="com.wudi.srv.TemperatureImpl" doc:name="Java"/>
+    </flow>
+    <flow name="getDistanceFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/srv/distance" doc:name="HTTP"/>
+        <cxf:jaxws-service serviceClass="com.wudi.srv.DistanceImpl" doc:name="CXF"/>
+        <component class="com.wudi.srv.DistanceImpl" doc:name="Java"/>
+    </flow>
+    <flow name="getLightStatusFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/srv/lightstatus" doc:name="HTTP"/>
+        <cxf:jaxws-service serviceClass="com.wudi.srv.LightImpl" doc:name="CXF"/>
+        <component class="com.wudi.srv.LightImpl" doc:name="Java"/>
+    </flow>
+    <flow name="getSoundStatusFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/srv/soundstatus" doc:name="HTTP"/>
+        <cxf:jaxws-service serviceClass="com.wudi.srv.SoundImpl" doc:name="CXF"/>
+        <component class="com.wudi.srv.SoundImpl" doc:name="Java"/>
+    </flow>
+    <flow name="getAllFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/srv/all" doc:name="HTTP">
+            <http:response-builder statusCode="200">
+                <http:header headerName="Content-Type" value="application/json"/>
+            </http:response-builder>
+        </http:listener>
+        <set-variable variableName="blank" value="#[&quot;&quot;]" doc:name="Variable"/>
+        <flow-ref name="integrateTemperatureFlow" doc:name="Integrate Temperature"/>
+        <flow-ref name="integrateDistanceFlow" doc:name="Integrate Distance"/>
+        <flow-ref name="integrateLightStatusFlow" doc:name="integrateLightStatusFlow"/>
+        <flow-ref name="integrateSoundStatusFlow" doc:name="integrateSoundStatusFlow"/>
+        <set-payload value="{&quot;distance&quot;:#[flowVars['distance']], &quot;temperature&quot;:#[flowVars['temperature']],&quot;lightOn&quot;:#[flowVars['lightOn']], &quot;soundOn&quot;:#[flowVars['soundOn']]}" doc:name="Set Payload"/>
+    </flow>
+    <sub-flow name="integrateSoundStatusFlow">
+        <data-mapper:transform config-ref="String_To_Xml_getResult__1String_To_Xml_getResult__2String_To_Xml_getResult__3String_To_Xml_getResult__4String_To_Xml_getResult__5" input-ref="#[flowVars[&quot;blank&quot;]]" doc:name="String To Xml&lt;getResult&gt;"/>
+        <ws:consumer config-ref="Sound_Status_Service_Consumer1" operation="getResult" doc:name="Web Service Consumer"/>
+        <data-mapper:transform config-ref="Xml_getResultResponse__To_Map_1Xml_getResultResponse__To_Map_2Xml_getResultResponse__To_Map_3" doc:name="Xml&lt;getResultResponse&gt; To Map"/>
+        <set-variable variableName="soundOn" value="#[payload.soundOn]" doc:name="Variable"/>
+    </sub-flow>
+    <sub-flow name="integrateLightStatusFlow">
+        <data-mapper:transform config-ref="String_To_Xml_getResult__1String_To_Xml_getResult__2String_To_Xml_getResult__3String_To_Xml_getResult__4" input-ref="#[flowVars[&quot;blank&quot;]]" doc:name="String To Xml&lt;getResult&gt;"/>
+        <ws:consumer config-ref="Web_Service_Consumer" operation="getResult" doc:name="Web Service Consumer"/>
+        <data-mapper:transform config-ref="Xml_getResultResponse__To_Map_1Xml_getResultResponse__To_Map_2" doc:name="Xml&lt;getResultResponse&gt; To Map"/>
+        <set-variable variableName="lightOn" value="#[payload.lightOn]" doc:name="Variable"/>
+    </sub-flow>
+    <sub-flow name="integrateDistanceFlow">
+        <data-mapper:transform config-ref="String_To_Xml_getResult__1String_To_Xml_getResult__2String_To_Xml_getResult__3" input-ref="#[flowVars[&quot;blank&quot;]]" doc:name="String To Xml&lt;getResult&gt;"/>
+        <ws:consumer config-ref="Distance_Service_Consumer" operation="getResult" doc:name="Distance Service Consumer"/>
+        <data-mapper:transform config-ref="Xml_getResultResponse__To_Map_1" doc:name="Xml&lt;getResultResponse&gt; To Map"/>
+        <set-variable variableName="distance" value="#[payload.distance]" doc:name="Variable"/>
+    </sub-flow>
+    <sub-flow name="integrateTemperatureFlow">
+        <data-mapper:transform config-ref="String_To_Xml_getResult__1" input-ref="#[flowVars[&quot;blank&quot;]]" doc:name="String To Xml&lt;getResult&gt;"/>
+        <ws:consumer config-ref="Temperature_Service_Consumer" operation="getResult" doc:name="Temperature Service Consumer"/>
+        <data-mapper:transform config-ref="Xml_getResultResponse__To_Map" doc:name="Xml&lt;getResultResponse&gt; To Map"/>
+        <set-variable variableName="temperature" value="#[payload.temperature]" doc:name="Variable"/>
+    </sub-flow>
+</mule>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph __version="3.5.0" author="leapoahead" created="Sun Jun 21 20:03:07 CST 2015" description="Xml&lt;getResultResponse&gt; To Map" guiVersion="3.4.4.P" id="1434889802787" licenseCode="Unlicensed" licenseType="Unknown" modified="Sun Jun 21 20:03:07 CST 2015" modifiedBy="leapoahead" name="Xml_getResultResponse__To_Map_1Xml_getResultResponse__To_Map_2Xml_getResultResponse__To_Map_3" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{http://srv.wudi.com/=ns0}/ns0:getResultResponse" _dataStructure="OBJECT" _id="__id" _type="Input" id="89dabb7a-a581-4ba8-9384-bc73703945ea">
+<Record fieldDelimiter="," name="getResultResponse" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __implementationClass="java.lang.Double" __index="0" __sourcePath="{http://srv.wudi.com/=ns0}/ns0:getResultResponse/return" containerType="SINGLE" label="return" name="return" type="number"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/getResultResponse" _dataStructure="OBJECT" _id="__id" _type="Output" id="42ef1212-ab4d-49ac-a141-1bc336e34498">
+<Record fieldDelimiter="," name="getResultResponse" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/getResultResponse/soundOn" containerType="SINGLE" label="soundOn" name="return" type="number"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" guiName="Foreach 'ns0:getResultResponse' -&gt; 'getResultResponse'" guiX="460" guiY="20" id="FOREACH_NS0_GET_RESULT_RESPONSE_GET_RESULT_RESPONSE" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+output.return = input.return;
+]]></attr>
+</Node>
+<Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<getResultResponse xmlns:clover="http://www.cloveretl.com/ns/xmlmapping" clover:inPort="0">
+  <soundOn>$0.return</soundOn>
+</getResultResponse>]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiName="XML READER" guiX="20" guiY="20" id="XML_READER0" type="XML_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context namespacePaths="ns0=&quot;http://srv.wudi.com/&quot;" outPort="0" sequenceField="__id" xpath="/ns0:getResultResponse">
+  <Mapping cloverField="return" trim="true" xpath="return"/>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[XML]]></attr>
+<attr name="__metadata"><![CDATA[true]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="FOREACH_NS0_GET_RESULT_RESPONSE_GET_RESULT_RESPONSE:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="42ef1212-ab4d-49ac-a141-1bc336e34498" outPort="Port 0 (out)" toNode="MAP_WRITER0:0"/>
+<Edge debugMode="true" fromNode="XML_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="89dabb7a-a581-4ba8-9384-bc73703945ea" outPort="Port 0 (out)" toNode="FOREACH_NS0_GET_RESULT_RESPONSE_GET_RESULT_RESPONSE:0"/>
+</Phase>
+</Graph>

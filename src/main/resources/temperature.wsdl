@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://srv.wudi.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="Temperature" targetNamespace="http://srv.wudi.com/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://srv.wudi.com/" elementFormDefault="unqualified" targetNamespace="http://srv.wudi.com/" version="1.0">
+<xs:element name="getResult" type="tns:getResult"/>
+<xs:element name="getResultResponse" type="tns:getResultResponse"/>
+<xs:complexType name="getResult">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getResultResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:float"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getResultResponse">
+    <wsdl:part element="tns:getResultResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResult">
+    <wsdl:part element="tns:getResult" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Temperature">
+    <wsdl:operation name="getResult">
+      <wsdl:input message="tns:getResult" name="getResult">
+    </wsdl:input>
+      <wsdl:output message="tns:getResultResponse" name="getResultResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TemperatureSoapBinding" type="tns:Temperature">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getResult">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getResult">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getResultResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Temperature">
+    <wsdl:port binding="tns:TemperatureSoapBinding" name="TemperatureImplPort">
+      <soap:address location="http://localhost:8081/srv/temperature"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
