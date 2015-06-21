@@ -48,7 +48,7 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
         <component class="com.wudi.srv.SoundImpl" doc:name="Java"/>
     </flow>
     <flow name="getAllFlow">
-        <http:listener config-ref="HTTP_Listener_Configuration" path="/srv/all" doc:name="HTTP">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/api/all" doc:name="HTTP">
             <http:response-builder statusCode="200">
                 <http:header headerName="Content-Type" value="application/json"/>
             </http:response-builder>
